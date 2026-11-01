@@ -1,16 +1,17 @@
-
 let homeScore = 0;
 let guestScore = 0;
 
 const homeDisplay = document.getElementById("score-left");
 const guestDisplay = document.getElementById("score-right");
 
+// Check that scoreboard elements exist
+if (!homeDisplay || !guestDisplay) {
+    throw new Error("Scoreboard elements not found!");
+}
+
 function updateDisplay() {
     homeDisplay.textContent = homeScore;
     guestDisplay.textContent = guestScore;
-    if (!homeDisplay || !guestDisplay) {
-    throw new Error("Scoreboard elements not found!");
-}
 }
 
 function addScore(team, points) {
@@ -33,7 +34,6 @@ function resetScores() {
     updateDisplay();
 }
 
-// Handle all scoring buttons
 document.querySelectorAll("[data-team]").forEach(button => {
     button.addEventListener("click", () => {
         const team = button.dataset.team;
@@ -43,8 +43,6 @@ document.querySelectorAll("[data-team]").forEach(button => {
     });
 });
 
-// Start a new game
 document.getElementById("new-game").addEventListener("click", resetScores);
 
-// Initialize scoreboard
 updateDisplay();
