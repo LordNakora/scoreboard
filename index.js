@@ -8,6 +8,9 @@ const guestDisplay = document.getElementById("score-right");
 function updateDisplay() {
     homeDisplay.textContent = homeScore;
     guestDisplay.textContent = guestScore;
+    if (!homeDisplay || !guestDisplay) {
+    throw new Error("Scoreboard elements not found!");
+}
 }
 
 function addScore(team, points) {
@@ -17,6 +20,8 @@ function addScore(team, points) {
         homeScore += points;
     } else if (team === "guest") {
         guestScore += points;
+    } else {
+        return;
     }
 
     updateDisplay();
