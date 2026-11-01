@@ -1,22 +1,45 @@
-let scoreLeft = document.getElementById('score-left')
-let scoreRight = document.getElementById('score-right')
 
-currentScoreL = 0
-currentScoreR = 0
+let homeScore = 0;
+let guestScore = 0;
 
-function addScore(team, scoreToAdd) {
-  if (team == 'home') {
-    currentScoreL += scoreToAdd
-    scoreLeft.textContent = currentScoreL
-  } else {
-    currentScoreR += scoreToAdd
-    scoreRight.textContent = currentScoreR
-  }
+const homeDisplay = document.getElementById("score-left");
+const guestDisplay = document.getElementById("score-right");
+
+function updateDisplay() {
+    homeDisplay.textContent = homeScore;
+    guestDisplay.textContent = guestScore;
+}
+
+function addScore(team, points) {
+    if (!Number.isInteger(points) || points < 1) return;
+
+    if (team === "home") {
+        homeScore += points;
+    } else if (team === "guest") {
+        guestScore += points;
+    }
+
+    updateDisplay();
 }
 
 function resetScores() {
-  currentScoreL = 0
-  currentScoreR = 0
-  scoreLeft.textContent = currentScoreL
-  scoreRight.textContent = currentScoreR
+    homeScore = 0;
+    guestScore = 0;
+    updateDisplay();
 }
+
+// Handle all scoring buttons
+document.querySelectorAll("[data-team]").forEach(button => {
+    button.addEventListener("click", () => {
+        const team = button.dataset.team;
+        const points = Number(button.dataset.points);
+
+        addScore(team, points);
+    });
+});
+
+// Start a new game
+document.getElementById("new-game").addEventListener("click", resetScores);
+
+// Initialize scoreboard
+updateDisplay();
